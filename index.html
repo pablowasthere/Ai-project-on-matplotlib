@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A Class X AI data analysis project exploring solar, wind, coal and grid carbon emissions from 2020 to 2026.">
+<title>Clean Energy Transition | Data Project</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--bg:#08111f;--panel:#111e30;--panel2:#17263a;--text:#edf4ff;--muted:#9fb0c6;--line:#263950;--green:#42d392;--amber:#f5b942;--blue:#48b8ed;--red:#ff7474}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,#17344a 0,transparent 34%),var(--bg);color:var(--text);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:34px 22px 70px}.eyebrow{color:var(--green);font-size:.76rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+h1{font-size:clamp(2.1rem,5vw,4.1rem);line-height:1.05;letter-spacing:-.045em;max-width:850px;margin:14px 0}
+.lead{color:var(--muted);max-width:760px;font-size:1.05rem}.tags{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 30px}.tag{border:1px solid var(--line);border-radius:99px;padding:6px 11px;color:#c7d6e8;font-size:.8rem}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:28px 0}.card,.panel{background:linear-gradient(145deg,var(--panel),#0e1a2a);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 14px 40px #0002}
+.metric-label{color:var(--muted);font-size:.82rem}.metric{font-size:clamp(1.65rem,3vw,2.35rem);font-weight:800;letter-spacing:-.04em;margin:7px 0 2px}.metric-note{color:var(--muted);font-size:.78rem}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:42px 0 16px}.section-head h2{font-size:1.55rem;letter-spacing:-.025em;margin:0}.section-head p{color:var(--muted);font-size:.85rem;margin:0}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel h3{margin:0 0 5px;font-size:1rem}.panel p{color:var(--muted);font-size:.83rem;margin:0 0 18px}.chartbox{height:300px;position:relative}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:.88rem}.table th,.table td{text-align:right;padding:11px 12px;border-bottom:1px solid var(--line);white-space:nowrap}.table th:first-child,.table td:first-child{text-align:left}.table th{color:var(--muted);font-weight:650}
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.insight strong{display:block;color:var(--green);font-size:1.05rem;margin-bottom:7px}.insight p{color:var(--muted);font-size:.88rem;margin:0}
+.note{margin-top:22px;padding:16px 18px;border-left:3px solid var(--amber);background:#f5b94212;border-radius:8px;color:#d9e2ef;font-size:.84rem}
+footer{margin-top:48px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+a{color:var(--green)}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.charts,.insights{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:5px}}
+@media(max-width:420px){.grid{grid-template-columns:1fr 1fr}.card{padding:14px}.wrap{padding:25px 15px 50px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Class X · Artificial Intelligence (417) · Capstone</div>
+  <h1>The clean energy transition, in the data.</h1>
+  <p class="lead">An empirical study of solar and wind energy growth alongside grid carbon emissions, using the 2020–2026 Bengaluru smart-grid dataset documented in the project report.</p>
+  <div class="tags"><span class="tag">SDG 7 · Affordable & Clean Energy</span><span class="tag">SDG 13 · Climate Action</span><span class="tag">Pandas · NumPy · Matplotlib</span></div>
+
+  <section class="grid" aria-label="Key project metrics">
+    <article class="card"><div class="metric-label">Solar generation growth</div><div class="metric" style="color:var(--amber)">+388.1%</div><div class="metric-note">420 → 2,050 MWh</div></article>
+    <article class="card"><div class="metric-label">CO₂ emissions change</div><div class="metric" style="color:var(--red)">−53.4%</div><div class="metric-note">2,180 → 1,015 metric tons</div></article>
+    <article class="card"><div class="metric-label">Renewable share in 2026</div><div class="metric" style="color:var(--green)">71.11%</div><div class="metric-note">Up from 22.81% in 2020</div></article>
+    <article class="card"><div class="metric-label">Pearson correlation</div><div class="metric">−0.9988</div><div class="metric-note">Renewables vs. CO₂ emissions</div></article>
+  </section>
+
+  <div class="section-head"><h2>Explore the energy mix</h2><p>Annual generation, measured in MWh</p></div>
+  <section class="charts">
+    <article class="panel"><h3>Generation by source</h3><p>Solar and wind rise as thermal coal grid energy declines.</p><div class="chartbox"><canvas id="mixChart" aria-label="Grouped bar chart of solar, wind and coal energy"></canvas></div></article>
+    <article class="panel"><h3>Renewables and CO₂ emissions</h3><p>Two datasets with different units, displayed on separate vertical axes.</p><div class="chartbox"><canvas id="trendChart" aria-label="Line chart of renewable energy and carbon emissions"></canvas></div></article>
+  </section>
+
+  <div class="section-head"><h2>Year-by-year dataset</h2><p>Values transcribed from the project report</p></div>
+  <section class="panel table-wrap"><table class="table"><thead><tr><th>Year</th><th>Solar (MWh)</th><th>Wind (MWh)</th><th>Coal (MWh)</th><th>Renewables (MWh)</th><th>Renewable share</th><th>CO₂ (t)</th></tr></thead><tbody id="dataRows"></tbody></table></section>
+
+  <div class="section-head"><h2>What stands out</h2><p>Key patterns reported by the analysis</p></div>
+  <section class="insights">
+    <article class="panel insight"><strong>2024 · Renewable crossover</strong><p>Combined solar and wind generation reached 1,950 MWh, exceeding coal-based grid energy at 1,800 MWh for the first time.</p></article>
+    <article class="panel insight"><strong>Demand rose, emissions fell</strong><p>Total energy increased from 3,200 to 4,050 MWh while reported CO₂ emissions declined by 53.4%.</p></article>
+    <article class="panel insight"><strong>Strong inverse relationship</strong><p>The Pearson coefficient is −0.9988. This indicates a very strong inverse association, not proof of causation.</p></article>
+  </section>
+  <div class="note"><b>Data note:</b> These values are the report's compiled dataset for an institutional and urban smart-grid cluster in Bengaluru. The report does not provide a downloadable raw-data source or independent audit trail. Treat the figures as project-study data, not official citywide statistics. Also, the correlation does not establish that renewable growth alone caused the emissions decline.</div>
+  <footer><span>Prepared by Aryan Bhose & Aarush Yadav · Grade X, Section K</span><span>Delhi Public School Bangalore North · Academic Session 2026–2027</span></footer>
+</main>
+<script>
+const years=[2020,2021,2022,2023,2024,2025,2026];
+const solar=[420,580,790,1050,1340,1680,2050], wind=[310,360,430,510,610,720,830];
+const coal=[2470,2360,2230,2040,1800,1500,1170], renewable=[730,940,1220,1560,1950,2400,2880];
+const co2=[2180,2075,1950,1780,1565,1305,1015];
+const share=renewable.map((v,i)=>(v/(v+coal[i])*100).toFixed(2));
+document.getElementById('dataRows').innerHTML=years.map((y,i)=>`<tr><td>${y}</td><td>${solar[i].toLocaleString('en-IN')}</td><td>${wind[i].toLocaleString('en-IN')}</td><td>${coal[i].toLocaleString('en-IN')}</td><td>${renewable[i].toLocaleString('en-IN')}</td><td>${share[i]}%</td><td>${co2[i].toLocaleString('en-IN')}</td></tr>`).join('');
+Chart.defaults.color='#aebed1'; Chart.defaults.borderColor='#263950'; Chart.defaults.font.family='Inter, system-ui, sans-serif';
+new Chart(document.getElementById('mixChart'),{type:'bar',data:{labels:years,datasets:[
+{label:'Solar',data:solar,backgroundColor:'#f5b942',borderRadius:5},
+{label:'Wind',data:wind,backgroundColor:'#48b8ed',borderRadius:5},
+{label:'Thermal coal grid',data:coal,backgroundColor:'#64748b',borderRadius:5}]},
+options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:8}}},scales:{y:{beginAtZero:true,title:{display:true,text:'Energy (MWh)'},grid:{color:'#263950'}},x:{grid:{display:false}}}}});
+new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:years,datasets:[
+{label:'Renewable energy (MWh)',data:renewable,yAxisID:'y',borderColor:'#42d392',backgroundColor:'#42d392',tension:.25,pointRadius:4},
+{label:'CO₂ emissions (metric tons)',data:co2,yAxisID:'y1',borderColor:'#ff7474',backgroundColor:'#ff7474',borderDash:[6,4],tension:.25,pointRadius:4}]},
+options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:8}}},scales:{y:{position:'left',title:{display:true,text:'Renewables (MWh)'},grid:{color:'#263950'}},y1:{position:'right',title:{display:true,text:'CO₂ (metric tons)'},grid:{drawOnChartArea:false}},x:{grid:{display:false}}}}});
+</script>
+</body></html>
